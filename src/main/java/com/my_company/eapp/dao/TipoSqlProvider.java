@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
 public class TipoSqlProvider {
+
     public String countByExample(TipoExample example) {
         SQL sql = new SQL();
         sql.SELECT("count(*)").FROM("tipo");
@@ -26,65 +27,65 @@ public class TipoSqlProvider {
     public String insertSelective(Tipo row) {
         SQL sql = new SQL();
         sql.INSERT_INTO("tipo");
-        
+
         if (row.getDescripcion() != null) {
             sql.VALUES("descripcion", "#{descripcion,jdbcType=VARCHAR}");
         }
-        
-        if (row.getCodTipo() != null) {
-            sql.VALUES("cod_tipo", "#{codTipo,jdbcType=VARCHAR}");
+
+        if (row.getFechaRegistro() != null) {
+            sql.VALUES("fecha_registro", "#{fechaRegistro,jdbcType=DATE}");
         }
-        
+
         if (row.getIdCategoria() != null) {
             sql.VALUES("id_categoria", "#{idCategoria,jdbcType=INTEGER}");
         }
-        
+
         return sql.toString();
     }
 
     public String selectByExample(TipoExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
-            sql.SELECT_DISTINCT("id_tipo");
+            sql.SELECT_DISTINCT("cod_tipo");
         } else {
-            sql.SELECT("id_tipo");
+            sql.SELECT("cod_tipo");
         }
         sql.SELECT("descripcion");
-        sql.SELECT("cod_tipo");
+        sql.SELECT("fecha_registro");
         sql.SELECT("id_categoria");
         sql.FROM("tipo");
         applyWhere(sql, example, false);
-        
+
         if (example != null && example.getOrderByClause() != null) {
             sql.ORDER_BY(example.getOrderByClause());
         }
-        
+
         return sql.toString();
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
         Tipo row = (Tipo) parameter.get("row");
         TipoExample example = (TipoExample) parameter.get("example");
-        
+
         SQL sql = new SQL();
         sql.UPDATE("tipo");
-        
-        if (row.getIdTipo() != null) {
-            sql.SET("id_tipo = #{row.idTipo,jdbcType=INTEGER}");
-        }
-        
-        if (row.getDescripcion() != null) {
-            sql.SET("descripcion = #{row.descripcion,jdbcType=VARCHAR}");
-        }
-        
+
         if (row.getCodTipo() != null) {
             sql.SET("cod_tipo = #{row.codTipo,jdbcType=VARCHAR}");
         }
-        
+
+        if (row.getDescripcion() != null) {
+            sql.SET("descripcion = #{row.descripcion,jdbcType=VARCHAR}");
+        }
+
+        if (row.getFechaRegistro() != null) {
+            sql.SET("fecha_registro = #{row.fechaRegistro,jdbcType=DATE}");
+        }
+
         if (row.getIdCategoria() != null) {
             sql.SET("id_categoria = #{row.idCategoria,jdbcType=INTEGER}");
         }
-        
+
         applyWhere(sql, example, true);
         return sql.toString();
     }
@@ -92,12 +93,12 @@ public class TipoSqlProvider {
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
         sql.UPDATE("tipo");
-        
-        sql.SET("id_tipo = #{row.idTipo,jdbcType=INTEGER}");
-        sql.SET("descripcion = #{row.descripcion,jdbcType=VARCHAR}");
+
         sql.SET("cod_tipo = #{row.codTipo,jdbcType=VARCHAR}");
+        sql.SET("descripcion = #{row.descripcion,jdbcType=VARCHAR}");
+        sql.SET("fecha_registro = #{row.fechaRegistro,jdbcType=DATE}");
         sql.SET("id_categoria = #{row.idCategoria,jdbcType=INTEGER}");
-        
+
         TipoExample example = (TipoExample) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
@@ -106,21 +107,32 @@ public class TipoSqlProvider {
     public String updateByPrimaryKeySelective(Tipo row) {
         SQL sql = new SQL();
         sql.UPDATE("tipo");
-        
+
         if (row.getDescripcion() != null) {
             sql.SET("descripcion = #{descripcion,jdbcType=VARCHAR}");
         }
-        
-        if (row.getCodTipo() != null) {
-            sql.SET("cod_tipo = #{codTipo,jdbcType=VARCHAR}");
+
+        if (row.getFechaRegistro() != null) {
+            sql.SET("fecha_registro = #{fechaRegistro,jdbcType=DATE}");
         }
-        
+
         if (row.getIdCategoria() != null) {
             sql.SET("id_categoria = #{idCategoria,jdbcType=INTEGER}");
         }
-        
-        sql.WHERE("id_tipo = #{idTipo,jdbcType=INTEGER}");
-        
+
+        sql.WHERE("cod_tipo = #{codTipo,jdbcType=VARCHAR}");
+
+        return sql.toString();
+    }
+
+    public String selectByCategoria(Map<String, Object> parameter) {
+        Integer idCategoria = (Integer) parameter.get("idCategoria");
+
+        SQL sql = new SQL();
+        sql.SELECT("cod_tipo", "descripcion", "fecha_registro", "id_categoria")
+                .FROM("tipo")
+                .WHERE("id_categoria = #{idCategoria,jdbcType=INTEGER}");
+
         return sql.toString();
     }
 
@@ -128,7 +140,7 @@ public class TipoSqlProvider {
         if (example == null) {
             return;
         }
-        
+
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -150,7 +162,7 @@ public class TipoSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -162,7 +174,7 @@ public class TipoSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-                
+
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -173,14 +185,14 @@ public class TipoSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-                    
+
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -211,7 +223,7 @@ public class TipoSqlProvider {
                 sb.append(')');
             }
         }
-        
+
         if (sb.length() > 0) {
             sql.WHERE(sb.toString());
         }

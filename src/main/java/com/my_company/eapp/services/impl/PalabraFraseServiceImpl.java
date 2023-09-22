@@ -48,7 +48,7 @@ public class PalabraFraseServiceImpl implements PalabraFraseService {
 
     @Override
     public int getPalabraFraseIdByContenido(String contenido) {
-        return palabraFraseMapper.selectIdByContenido(contenido);
+        return palabraFraseMapper.getPalabraFraseIdByContenido(contenido);
     }
 
     @Override

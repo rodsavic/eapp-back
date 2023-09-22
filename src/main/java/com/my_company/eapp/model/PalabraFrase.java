@@ -13,7 +13,7 @@ public class PalabraFrase {
 
     private Date fechaRegistro;
 
-    private Integer idTipo;
+    private String codTipo;
 
     public Integer getIdPalabraFrase() {
         return idPalabraFrase;
@@ -55,11 +55,11 @@ public class PalabraFrase {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Integer getIdTipo() {
-        return idTipo;
+    public String getCodTipo() {
+        return codTipo;
     }
 
-    public void setIdTipo(Integer idTipo) {
-        this.idTipo = idTipo;
+    public void setCodTipo(String codTipo) {
+        this.codTipo = codTipo == null ? null : codTipo.trim();
     }
 }

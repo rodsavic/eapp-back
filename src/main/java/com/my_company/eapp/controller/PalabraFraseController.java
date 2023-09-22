@@ -47,17 +47,18 @@ public class PalabraFraseController {
     public int deletePalabraFrase(@PathVariable Integer id) {
         return palabraFraseService.deletePalabraFrase(id);
     }
-    
+
     @GetMapping("/buscarPorContenido/{contenido}")
     public Integer getPalabraFraseIdByContenido(@PathVariable String contenido) {
         return palabraFraseService.getPalabraFraseIdByContenido(contenido);
     }
-    
+
     @GetMapping("/buscar")
     public List<PalabraFrase> buscarPalabrasConFiltros(
             @RequestParam(name = "contenido", required = false) String contenido,
             @RequestParam(name = "dificultad", required = false) String dificultad,
             @RequestParam(name = "aprendido", required = false) Boolean aprendido,
+            @RequestParam(name = "codTipo", required = false) String codTipo,
             @RequestParam(name = "fechaInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
             @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
 
@@ -76,6 +77,13 @@ public class PalabraFraseController {
 
         if (aprendido != null) {
             criteria.andAprendidoEqualTo(aprendido);
+        }
+
+        if (codTipo != null) {
+            System.out.println("codTipo: " + codTipo);
+            criteria.andCodTipoEqualTo(codTipo);
+        } else {
+            System.out.println("codTipo es null");
         }
 
         if (fechaInicio != null && fechaFin != null) {

@@ -25,7 +25,7 @@
             targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-
+        <!--
         <table tableName="categoria" domainObjectName="Categoria">
             <generatedKey column="id_categoria" sqlStatement="JDBC" identity="true" />
         </table>
@@ -48,9 +48,13 @@
         <table tableName="significado" domainObjectName="Significado">
             <generatedKey column="id_significado" sqlStatement="JDBC" identity="true" />
         </table>
+        -->
         <table tableName="tipo" domainObjectName="Tipo">
-            <generatedKey column="id_tipo" sqlStatement="JDBC" identity="true" />
+            <generatedKey column="cod_tipo" sqlStatement="JDBC" identity="true" />
         </table> 
+        <table tableName="palabra_frase" domainObjectName="PalabraFrase">
+            <generatedKey column="id_palabra_frase" sqlStatement="JDBC" identity="true" />
+        </table>
     </context>
 </generatorConfiguration>
 

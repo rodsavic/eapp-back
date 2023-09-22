@@ -43,8 +43,8 @@ public class PalabraFraseSqlProvider {
             sql.VALUES("fecha_registro", "#{fechaRegistro,jdbcType=DATE}");
         }
         
-        if (row.getIdTipo() != null) {
-            sql.VALUES("id_tipo", "#{idTipo,jdbcType=INTEGER}");
+        if (row.getCodTipo() != null) {
+            sql.VALUES("cod_tipo", "#{codTipo,jdbcType=VARCHAR}");
         }
         
         return sql.toString();
@@ -61,7 +61,7 @@ public class PalabraFraseSqlProvider {
         sql.SELECT("dificultad");
         sql.SELECT("aprendido");
         sql.SELECT("fecha_registro");
-        sql.SELECT("id_tipo");
+        sql.SELECT("cod_tipo");
         sql.FROM("palabra_frase");
         applyWhere(sql, example, false);
         
@@ -99,8 +99,8 @@ public class PalabraFraseSqlProvider {
             sql.SET("fecha_registro = #{row.fechaRegistro,jdbcType=DATE}");
         }
         
-        if (row.getIdTipo() != null) {
-            sql.SET("id_tipo = #{row.idTipo,jdbcType=INTEGER}");
+        if (row.getCodTipo() != null) {
+            sql.SET("cod_tipo = #{row.codTipo,jdbcType=VARCHAR}");
         }
         
         applyWhere(sql, example, true);
@@ -116,7 +116,7 @@ public class PalabraFraseSqlProvider {
         sql.SET("dificultad = #{row.dificultad,jdbcType=VARCHAR}");
         sql.SET("aprendido = #{row.aprendido,jdbcType=BIT}");
         sql.SET("fecha_registro = #{row.fechaRegistro,jdbcType=DATE}");
-        sql.SET("id_tipo = #{row.idTipo,jdbcType=INTEGER}");
+        sql.SET("cod_tipo = #{row.codTipo,jdbcType=VARCHAR}");
         
         PalabraFraseExample example = (PalabraFraseExample) parameter.get("example");
         applyWhere(sql, example, true);
@@ -143,14 +143,23 @@ public class PalabraFraseSqlProvider {
             sql.SET("fecha_registro = #{fechaRegistro,jdbcType=DATE}");
         }
         
-        if (row.getIdTipo() != null) {
-            sql.SET("id_tipo = #{idTipo,jdbcType=INTEGER}");
+        if (row.getCodTipo() != null) {
+            sql.SET("cod_tipo = #{codTipo,jdbcType=VARCHAR}");
         }
         
         sql.WHERE("id_palabra_frase = #{idPalabraFrase,jdbcType=INTEGER}");
         
         return sql.toString();
     }
+    
+    public String getPalabraFraseIdByContenido(String contenido) {
+    SQL sql = new SQL();
+    sql.SELECT("id_palabra_frase") // seleccionas el id_palabra_frase
+       .FROM("palabra_frase") // de la tabla palabra_frase
+       .WHERE("contenido = #{contenido,jdbcType=VARCHAR}"); // donde el contenido coincide con el parámetro proporcionado
+    
+    return sql.toString();
+}
 
     protected void applyWhere(SQL sql, PalabraFraseExample example, boolean includeExamplePhrase) {
         if (example == null) {

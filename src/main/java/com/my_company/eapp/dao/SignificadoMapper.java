@@ -85,4 +85,19 @@ public interface SignificadoMapper {
         "where id_significado = #{idSignificado,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Significado row);
+    
+    @Select({
+        "select",
+        "id_significado, descripcion, id_palabra_frase, fecha_registro",
+        "from significado",
+        "where id_palabra_frase = #{idPalabraFrase,jdbcType=INTEGER}"
+        //"where id_significado = #{idSignificado,jdbcType=INTEGER}"
+    })
+    @Results({
+        @Result(column="id_significado", property="idSignificado", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="descripcion", property="descripcion", jdbcType=JdbcType.VARCHAR),
+        @Result(column="id_palabra_frase", property="idPalabraFrase", jdbcType=JdbcType.INTEGER),
+        @Result(column="fecha_registro", property="fechaRegistro", jdbcType=JdbcType.DATE)
+    })
+    List<Significado> selectByPalabraFrasePrimaryKey(Integer idPalabraFrase);
 }

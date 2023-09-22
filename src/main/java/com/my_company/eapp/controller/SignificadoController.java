@@ -23,7 +23,7 @@ public class SignificadoController {
     public SignificadoController(SignificadoService significadoService) {
         this.significadoService = significadoService;
     }
-    
+
     @GetMapping
     public List<Significado> getAllSignificados() {
         return significadoService.getAllSignificados();
@@ -49,6 +49,11 @@ public class SignificadoController {
     public int deleteSignificado(@PathVariable Integer id) {
         return significadoService.deleteSignificado(id);
     }
-    
-    
+
+    @GetMapping("/palabra/{idPalabraFrase}")
+    public List<Significado> getSignificadosByPalabraFraseId(@PathVariable Integer idPalabraFrase) {
+        System.out.println("Retorna: " + significadoService.selectByPalabraFrasePrimaryKey(idPalabraFrase));
+        return significadoService.selectByPalabraFrasePrimaryKey(idPalabraFrase);
+    }
+
 }

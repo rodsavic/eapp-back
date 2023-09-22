@@ -14,4 +14,5 @@ public interface SignificadoService {
     int createSignificado(Significado significado);
     int updateSignificado(Significado significado);
     int deleteSignificado(Integer id);
+    List<Significado> selectByPalabraFrasePrimaryKey(Integer idPalabraFrase);
 }

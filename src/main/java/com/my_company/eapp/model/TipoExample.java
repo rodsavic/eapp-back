@@ -1,6 +1,8 @@
 package com.my_company.eapp.model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class TipoExample {
@@ -104,63 +106,99 @@ public class TipoExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdTipoIsNull() {
-            addCriterion("id_tipo is null");
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+        }
+
+        public Criteria andCodTipoIsNull() {
+            addCriterion("cod_tipo is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoIsNotNull() {
-            addCriterion("id_tipo is not null");
+        public Criteria andCodTipoIsNotNull() {
+            addCriterion("cod_tipo is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoEqualTo(Integer value) {
-            addCriterion("id_tipo =", value, "idTipo");
+        public Criteria andCodTipoEqualTo(String value) {
+            addCriterion("cod_tipo =", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoNotEqualTo(Integer value) {
-            addCriterion("id_tipo <>", value, "idTipo");
+        public Criteria andCodTipoNotEqualTo(String value) {
+            addCriterion("cod_tipo <>", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoGreaterThan(Integer value) {
-            addCriterion("id_tipo >", value, "idTipo");
+        public Criteria andCodTipoGreaterThan(String value) {
+            addCriterion("cod_tipo >", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoGreaterThanOrEqualTo(Integer value) {
-            addCriterion("id_tipo >=", value, "idTipo");
+        public Criteria andCodTipoGreaterThanOrEqualTo(String value) {
+            addCriterion("cod_tipo >=", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoLessThan(Integer value) {
-            addCriterion("id_tipo <", value, "idTipo");
+        public Criteria andCodTipoLessThan(String value) {
+            addCriterion("cod_tipo <", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoLessThanOrEqualTo(Integer value) {
-            addCriterion("id_tipo <=", value, "idTipo");
+        public Criteria andCodTipoLessThanOrEqualTo(String value) {
+            addCriterion("cod_tipo <=", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoIn(List<Integer> values) {
-            addCriterion("id_tipo in", values, "idTipo");
+        public Criteria andCodTipoLike(String value) {
+            addCriterion("cod_tipo like", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoNotIn(List<Integer> values) {
-            addCriterion("id_tipo not in", values, "idTipo");
+        public Criteria andCodTipoNotLike(String value) {
+            addCriterion("cod_tipo not like", value, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoBetween(Integer value1, Integer value2) {
-            addCriterion("id_tipo between", value1, value2, "idTipo");
+        public Criteria andCodTipoIn(List<String> values) {
+            addCriterion("cod_tipo in", values, "codTipo");
             return (Criteria) this;
         }
 
-        public Criteria andIdTipoNotBetween(Integer value1, Integer value2) {
-            addCriterion("id_tipo not between", value1, value2, "idTipo");
+        public Criteria andCodTipoNotIn(List<String> values) {
+            addCriterion("cod_tipo not in", values, "codTipo");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodTipoBetween(String value1, String value2) {
+            addCriterion("cod_tipo between", value1, value2, "codTipo");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodTipoNotBetween(String value1, String value2) {
+            addCriterion("cod_tipo not between", value1, value2, "codTipo");
             return (Criteria) this;
         }
 
@@ -234,73 +272,63 @@ public class TipoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoIsNull() {
-            addCriterion("cod_tipo is null");
+        public Criteria andFechaRegistroIsNull() {
+            addCriterion("fecha_registro is null");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoIsNotNull() {
-            addCriterion("cod_tipo is not null");
+        public Criteria andFechaRegistroIsNotNull() {
+            addCriterion("fecha_registro is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoEqualTo(String value) {
-            addCriterion("cod_tipo =", value, "codTipo");
+        public Criteria andFechaRegistroEqualTo(Date value) {
+            addCriterionForJDBCDate("fecha_registro =", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoNotEqualTo(String value) {
-            addCriterion("cod_tipo <>", value, "codTipo");
+        public Criteria andFechaRegistroNotEqualTo(Date value) {
+            addCriterionForJDBCDate("fecha_registro <>", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoGreaterThan(String value) {
-            addCriterion("cod_tipo >", value, "codTipo");
+        public Criteria andFechaRegistroGreaterThan(Date value) {
+            addCriterionForJDBCDate("fecha_registro >", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoGreaterThanOrEqualTo(String value) {
-            addCriterion("cod_tipo >=", value, "codTipo");
+        public Criteria andFechaRegistroGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("fecha_registro >=", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoLessThan(String value) {
-            addCriterion("cod_tipo <", value, "codTipo");
+        public Criteria andFechaRegistroLessThan(Date value) {
+            addCriterionForJDBCDate("fecha_registro <", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoLessThanOrEqualTo(String value) {
-            addCriterion("cod_tipo <=", value, "codTipo");
+        public Criteria andFechaRegistroLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("fecha_registro <=", value, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoLike(String value) {
-            addCriterion("cod_tipo like", value, "codTipo");
+        public Criteria andFechaRegistroIn(List<Date> values) {
+            addCriterionForJDBCDate("fecha_registro in", values, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoNotLike(String value) {
-            addCriterion("cod_tipo not like", value, "codTipo");
+        public Criteria andFechaRegistroNotIn(List<Date> values) {
+            addCriterionForJDBCDate("fecha_registro not in", values, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoIn(List<String> values) {
-            addCriterion("cod_tipo in", values, "codTipo");
+        public Criteria andFechaRegistroBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("fecha_registro between", value1, value2, "fechaRegistro");
             return (Criteria) this;
         }
 
-        public Criteria andCodTipoNotIn(List<String> values) {
-            addCriterion("cod_tipo not in", values, "codTipo");
-            return (Criteria) this;
-        }
-
-        public Criteria andCodTipoBetween(String value1, String value2) {
-            addCriterion("cod_tipo between", value1, value2, "codTipo");
-            return (Criteria) this;
-        }
-
-        public Criteria andCodTipoNotBetween(String value1, String value2) {
-            addCriterion("cod_tipo not between", value1, value2, "codTipo");
+        public Criteria andFechaRegistroNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("fecha_registro not between", value1, value2, "fechaRegistro");
             return (Criteria) this;
         }
 

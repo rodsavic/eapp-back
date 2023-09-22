@@ -46,4 +46,9 @@ public class SignificadoServiceImpl implements SignificadoService {
     public int deleteSignificado(Integer id) {
         return significadoMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<Significado> selectByPalabraFrasePrimaryKey(Integer idPalabraFrase) {
+        return significadoMapper.selectByPalabraFrasePrimaryKey(idPalabraFrase);
+    }
 }
