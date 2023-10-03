@@ -1,12 +1,14 @@
 package com.my_company.eapp.services.impl;
 
 import com.my_company.eapp.dao.TipoMapper;
+import com.my_company.eapp.dto.TipoDto;
 import com.my_company.eapp.model.Tipo;
 import com.my_company.eapp.model.TipoExample;
 import com.my_company.eapp.services.TipoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TipoServiceImpl implements TipoService {
@@ -30,8 +32,9 @@ public class TipoServiceImpl implements TipoService {
     }
 
     @Override
-    public int insert(Tipo row) {
-        return tipoMapper.insert(row);
+    public int insert(TipoDto tipoDto) {
+        Tipo tipo = convertToEntity(tipoDto);
+        return tipoMapper.insert(tipo);
     }
 
     @Override
@@ -40,13 +43,15 @@ public class TipoServiceImpl implements TipoService {
     }
 
     @Override
-    public List<Tipo> selectByExample() {
-        return tipoMapper.selectByExample(null);
+    public List<TipoDto> selectByExample() {
+        List<Tipo> tipos = tipoMapper.selectByExample(null);
+        return tipos.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Tipo selectByPrimaryKey(String codTipo) {
-        return tipoMapper.selectByPrimaryKey(codTipo);
+    public TipoDto selectByPrimaryKey(String codTipo) {
+        Tipo tipo = tipoMapper.selectByPrimaryKey(codTipo);
+        return convertToDto(tipo);
     }
 
     @Override
@@ -60,8 +65,9 @@ public class TipoServiceImpl implements TipoService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Tipo row) {
-        return tipoMapper.updateByPrimaryKeySelective(row);
+    public int updateByPrimaryKeySelective(TipoDto tipoDto) {
+        Tipo tipo = convertToEntity(tipoDto);
+        return tipoMapper.updateByPrimaryKeySelective(tipo);
     }
 
     @Override
@@ -70,7 +76,26 @@ public class TipoServiceImpl implements TipoService {
     }
 
     @Override
-    public List<Tipo> selectByCategoriaPrimaryKey(Integer idCategoria) {
-        return tipoMapper.selectByCategoria(idCategoria);
+     public List<TipoDto> selectByCategoriaPrimaryKey(Integer idCategoria) {
+        List<Tipo> tipos = tipoMapper.selectByCategoria(idCategoria);
+        return tipos.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+     
+    private TipoDto convertToDto(Tipo tipo) {
+        TipoDto tipoDto = new TipoDto();
+        tipoDto.setCodTipo(tipo.getCodTipo());
+        tipoDto.setDescripcion(tipo.getDescripcion());
+        tipoDto.setIdCategoria(tipo.getIdCategoria());
+        tipoDto.setFechaRegistro(tipo.getFechaRegistro());
+        return tipoDto;
+    }
+
+    private Tipo convertToEntity(TipoDto tipoDto) {
+        Tipo tipo = new Tipo();
+        tipo.setCodTipo(tipoDto.getCodTipo());
+        tipo.setDescripcion(tipoDto.getDescripcion());
+        tipo.setIdCategoria(tipoDto.getIdCategoria());
+        tipo.setFechaRegistro(tipoDto.getFechaRegistro());
+        return tipo;
     }
 }

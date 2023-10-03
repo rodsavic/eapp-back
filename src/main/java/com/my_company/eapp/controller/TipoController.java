@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.my_company.eapp.controller;
+    package com.my_company.eapp.controller;
 
-import com.my_company.eapp.model.Tipo;
+import com.my_company.eapp.dto.TipoDto;
 import com.my_company.eapp.services.TipoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +14,34 @@ public class TipoController {
     private TipoService tipoService;
      
     @GetMapping
-    public List<Tipo> getAllTipos() {
+    public List<TipoDto> getAllTipos() {
         return tipoService.selectByExample();
     }
 
     @GetMapping("/{codTipo}")
-    public Tipo getTipoById(@PathVariable String codTipo) {
+    public TipoDto getTipoById(@PathVariable String codTipo) {
         return tipoService.selectByPrimaryKey(codTipo);
     }
 
     @GetMapping("/categoria/{idCategoria}")
-    public List<Tipo> getTiposByCategoria(@PathVariable Integer idCategoria) {
+    public List<TipoDto> getTiposByCategoria(@PathVariable Integer idCategoria) {
         return tipoService.selectByCategoriaPrimaryKey(idCategoria);
     }
 
     @PostMapping
-    public int createTipo(@RequestBody Tipo tipo) {
-        return tipoService.insertSelective(tipo);
+    public int createTipo(@RequestBody TipoDto tipoDto) {
+        return tipoService.insert(tipoDto);
     }
 
     @PutMapping("/{id}")
-    public int updateTipo(@PathVariable String id, @RequestBody Tipo tipo) {
-        tipo.setCodTipo(id);
-        return tipoService.updateByPrimaryKeySelective(tipo);
+    public int updateTipo(@PathVariable String codTipo, @RequestBody TipoDto tipoDto) {
+        tipoDto.setCodTipo(codTipo);
+        return tipoService.updateByPrimaryKeySelective(tipoDto);
     }
 
     @DeleteMapping("/{id}")
-    public int deleteTipo(@PathVariable String id) {
-        return tipoService.deleteByPrimaryKey(id);
+    public int deleteTipo(@PathVariable String codTipo) {
+        return tipoService.deleteByPrimaryKey(codTipo);
     }
     
 }

@@ -5,6 +5,7 @@
 package com.my_company.eapp.services;
 
 import com.my_company.eapp.model.Tipo;
+import com.my_company.eapp.dto.TipoDto;
 import com.my_company.eapp.model.TipoExample;
 import java.util.List;
 
@@ -15,21 +16,21 @@ public interface TipoService {
     
     int deleteByPrimaryKey(String codTipo);
     
-    int insert(Tipo row);
+    int insert(TipoDto tipoDto);
     
     int insertSelective(Tipo row);
     
-    List<Tipo> selectByExample();
+     List<TipoDto> selectByExample();
     
-    Tipo selectByPrimaryKey(String codTipo);
+    TipoDto selectByPrimaryKey(String codTipo);
     
     int updateByExampleSelective(Tipo row, TipoExample example);
     
     int updateByExample(Tipo row, TipoExample example);
     
-    int updateByPrimaryKeySelective(Tipo row);
+    int updateByPrimaryKeySelective(TipoDto tipoDto);
     
     int updateByPrimaryKey(Tipo row);
 
-    List<Tipo> selectByCategoriaPrimaryKey(Integer idCategoria);
+     List<TipoDto> selectByCategoriaPrimaryKey(Integer idCategoria);
 }
