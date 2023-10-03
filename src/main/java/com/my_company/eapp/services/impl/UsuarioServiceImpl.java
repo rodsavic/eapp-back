@@ -8,11 +8,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioMapper usuarioMapper;
+    
+     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UsuarioServiceImpl(UsuarioMapper usuarioMapper) {
@@ -32,6 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public int createUsuario(Usuario usuario) {
         System.out.println("Ingresa al metodo createUsuario - ServiceImpl");
+        usuario.setContrasenha(bCryptPasswordEncoder.encode(usuario.getContrasenha()));
         return usuarioMapper.insertSelective(usuario);
     }
 
@@ -68,4 +73,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         // ¡Asegúrate de implementar esto correctamente!
         return BCrypt.checkpw(inputPassword, hashedPassword);
     }
+    
+    
 }

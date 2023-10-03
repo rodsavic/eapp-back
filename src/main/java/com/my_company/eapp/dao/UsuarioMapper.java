@@ -96,16 +96,16 @@ public interface UsuarioMapper {
     
     @Select({
         "select",
-        "id_usuario,nombre_usuario, nombre, apellido, fecha_registro, contrasenha", // Solo necesitamos el nombre de usuario y la contraseña
+        "nombre_usuario, contrasenha", // Solo necesitamos el nombre de usuario y la contraseña
         "from usuario",
         "where nombre_usuario = #{nombreUsuario,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id_usuario", property="idUsuario", jdbcType=JdbcType.INTEGER, id=true),
+        //@Result(column="id_usuario", property="idUsuario", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="nombre_usuario", property="nombreUsuario", jdbcType=JdbcType.VARCHAR),
-        @Result(column="nombre", property="nombre", jdbcType=JdbcType.VARCHAR),
-        @Result(column="apellido", property="apellido", jdbcType=JdbcType.VARCHAR),
-        @Result(column="fecha_registro", property="fechaRegistro", jdbcType=JdbcType.DATE),
+        //@Result(column="nombre", property="nombre", jdbcType=JdbcType.VARCHAR),
+        //@Result(column="apellido", property="apellido", jdbcType=JdbcType.VARCHAR),
+       // @Result(column="fecha_registro", property="fechaRegistro", jdbcType=JdbcType.DATE),
         @Result(column="contrasenha", property="contrasenha", jdbcType=JdbcType.VARCHAR)
     })
     Usuario selectUsuarioByNombreUsuario(String nombreUsuario);
