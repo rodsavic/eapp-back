@@ -1,3 +1,4 @@
+/*
 package com.my_company.eapp.controller;
 
 import com.my_company.eapp.conf.JwtUtils;
@@ -63,3 +64,4 @@ public class AuthenticationController {
         return (Usuario) this.userDetailsService.loadUserByUsername(principal.getName());
     }
 }
+*/

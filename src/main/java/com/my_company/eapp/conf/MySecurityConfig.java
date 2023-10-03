@@ -1,4 +1,4 @@
-package com.my_company.eapp.conf;
+/*package com.my_company.eapp.conf;
 
 import com.my_company.eapp.services.impl.UserDetailsServiceImpl;
 import java.util.Arrays;
@@ -80,3 +80,4 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
 }
+*/

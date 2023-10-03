@@ -1,4 +1,4 @@
-package com.my_company.eapp.conf;
+/*package com.my_company.eapp.conf;
 
 import com.my_company.eapp.services.impl.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -60,3 +60,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request,response);
     }
 }
+*/
