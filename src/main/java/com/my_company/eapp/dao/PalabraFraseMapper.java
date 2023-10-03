@@ -56,7 +56,7 @@ public interface PalabraFraseMapper {
         @Result(column="fecha_registro", property="fechaRegistro", jdbcType=JdbcType.DATE),
         @Result(column="cod_tipo", property="codTipo", jdbcType=JdbcType.VARCHAR)
     })
-    List<PalabraFrase> selectByExample(PalabraFraseExample example);
+    List<PalabraFrase> selectByExample(PalabraFraseExample example, Integer idCategoria);
 
     @Select({
         "select",

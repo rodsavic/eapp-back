@@ -1,7 +1,6 @@
 package com.my_company.eapp.controller;
 
-import com.my_company.eapp.dao.PalabraFraseMapper;
-import com.my_company.eapp.model.PalabraFrase;
+import com.my_company.eapp.dto.PalabraFraseDto;
 import com.my_company.eapp.model.PalabraFraseExample;
 import com.my_company.eapp.services.PalabraFraseService;
 import java.util.Arrays;
@@ -24,23 +23,23 @@ public class PalabraFraseController {
     }
 
     @GetMapping
-    public List<PalabraFrase> getAllPalabrasFrases() {
+    public List<PalabraFraseDto> getAllPalabrasFrases() {
         return palabraFraseService.getAllPalabrasFrases();
     }
 
     @GetMapping("/{id}")
-    public PalabraFrase getPalabraFraseById(@PathVariable Integer id) {
+    public PalabraFraseDto getPalabraFraseById(@PathVariable Integer id) {
         return palabraFraseService.getPalabraFraseById(id);
     }
 
     @PostMapping
-    public int createPalabraFrase(@RequestBody PalabraFrase palabraFrase) {
-        return palabraFraseService.createPalabraFrase(palabraFrase);
+    public int createPalabraFrase(@RequestBody PalabraFraseDto palabraFraseDto) {
+        return palabraFraseService.createPalabraFrase(palabraFraseDto);
     }
 
     @PutMapping("/{id}")
-    public int updatePalabraFrase(@PathVariable Integer id, @RequestBody PalabraFrase palabraFrase) {
-        return palabraFraseService.updatePalabraFrase(id, palabraFrase);
+    public int updatePalabraFrase(@PathVariable Integer id, @RequestBody PalabraFraseDto palabraFraseDto) {
+        return palabraFraseService.updatePalabraFrase(id, palabraFraseDto);
     }
 
     @DeleteMapping("/{id}")
@@ -54,13 +53,15 @@ public class PalabraFraseController {
     }
 
     @GetMapping("/buscar")
-    public List<PalabraFrase> buscarPalabrasConFiltros(
+    public List<PalabraFraseDto> buscarPalabrasConFiltros(
             @RequestParam(name = "contenido", required = false) String contenido,
             @RequestParam(name = "dificultad", required = false) String dificultad,
             @RequestParam(name = "aprendido", required = false) Boolean aprendido,
             @RequestParam(name = "codTipo", required = false) String codTipo,
             @RequestParam(name = "fechaInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInicio,
-            @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin) {
+            @RequestParam(name = "fechaFin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaFin,
+            @RequestParam(name = "idCategoria", required = false) Integer idCategoria
+            ) {
 
         // Construye el objeto PalabraFraseExample
         PalabraFraseExample example = new PalabraFraseExample();
@@ -91,6 +92,6 @@ public class PalabraFraseController {
         }
 
         // Llama al método de búsqueda en el servicio
-        return palabraFraseService.buscarPalabrasConFiltros(example);
+        return palabraFraseService.buscarPalabrasConFiltros(example, idCategoria);
     }
 }
