@@ -47,4 +47,9 @@ public class OracionController {
     public int deleteOracion(@PathVariable Integer id) {
         return oracionService.deleteOracion(id);
     }
+    
+    @GetMapping("/palabra/{idPalabraFrase}")
+    public List<Oracion> getOracionIdByPalabraFraseId(@PathVariable Integer idPalabraFrase) {
+        return oracionService.getOracionIdByPalabraFraseId(idPalabraFrase);
+    }
 }

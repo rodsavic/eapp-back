@@ -123,6 +123,15 @@ public class OracionSqlProvider {
         
         return sql.toString();
     }
+    
+    public String getOracionIdByPalabraFraseId(Integer idPalabraFrase) {
+        SQL sql = new SQL();
+        sql.SELECT("id_oracion, texto, fecha_registro") // seleccionas el id_palabra_frase
+                .FROM("oracion") // de la tabla palabra_frase
+                .WHERE("id_palabra_frase = #{idPalabraFrase,jdbcType=VARCHAR}"); // donde el contenido coincide con el parámetro proporcionado
+
+        return sql.toString();
+    }
 
     protected void applyWhere(SQL sql, OracionExample example, boolean includeExamplePhrase) {
         if (example == null) {

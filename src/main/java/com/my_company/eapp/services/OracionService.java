@@ -14,4 +14,5 @@ public interface OracionService {
     int createOracion(Oracion oracion);
     int updateOracion(Oracion oracion);
     int deleteOracion(Integer id);
+    List<Oracion> getOracionIdByPalabraFraseId(Integer idPalabraFrase);
 }

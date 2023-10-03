@@ -85,4 +85,13 @@ public interface OracionMapper {
         "where id_oracion = #{idOracion,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Oracion row);
+    
+    @SelectProvider(type=OracionSqlProvider.class, method="getOracionIdByPalabraFraseId")
+    @Results({
+        @Result(column="id_oracion", property="idOracion", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="texto", property="texto", jdbcType=JdbcType.VARCHAR),
+        @Result(column="fecha_registro", property="fechaRegistro", jdbcType=JdbcType.DATE),
+        @Result(column="id_palabra_frase", property="idPalabraFrase", jdbcType=JdbcType.INTEGER)
+    })
+    List<Oracion> getOracionIdByPalabraFraseId(Integer idPalabraFrase);
 }

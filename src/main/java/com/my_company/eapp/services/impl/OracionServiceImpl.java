@@ -46,4 +46,9 @@ public class OracionServiceImpl implements OracionService {
     public int deleteOracion(Integer id) {
         return oracionMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<Oracion> getOracionIdByPalabraFraseId(Integer idPalabraFrase) {
+        return oracionMapper.getOracionIdByPalabraFraseId(idPalabraFrase);
+    }
 }
