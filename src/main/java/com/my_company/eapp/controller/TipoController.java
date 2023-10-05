@@ -1,4 +1,4 @@
-    package com.my_company.eapp.controller;
+package com.my_company.eapp.controller;
 
 import com.my_company.eapp.dto.TipoDto;
 import com.my_company.eapp.services.TipoService;
